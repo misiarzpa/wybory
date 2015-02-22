@@ -1,0 +1,38 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Imię %><br>
+    <%= f.text_field :name %>
+  </div>
+    <div class="field">
+    <%= f.label :Email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :Rola %><br>
+    <%= collection_select(:user, :role_id, Role.all, :id, :name, {prompt: true}) %>
+  </div>
+  <div class="field">
+  <%= f.label :Hasło %><br>
+  <%= f.password_field :password, placeholder: "Zostaw puste, jeśli nie zmieniasz" %>
+</div>
+  <div class="field">
+<% for district in District.all %>
+<label class="li"><%= radio_button_tag :district_ids, district.id, @user.districts.include?(district), :name => 'user[district_ids][]'%> <u><%= district.name %><%=' - województwo - '%> <%= district.voivodship.name %></u></label><br /><% end %>
+</div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

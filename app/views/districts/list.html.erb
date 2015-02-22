@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<% if user_signed_in? %>
+  <% if current_user.okregowy? %>
+<p>Witaj <%=@user.name%>! Oto Twój okręg:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nazwa</th>
+      <th>Województwo</th>
+      <th>Ważne głosy</th>
+      <th>Uprawnieni do głosowania</th>
+      <th>Wydane karty</th>
+      <th>Nieważne głosy</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+ 
+  <tbody>
+       <% @user.districts.each do |district| %>
+      <tr>
+        <td><%= district.name %></td>
+        <td><%= district.voivodship.name %></td>
+        <td><%= district.valid_votes %></td>
+        <td><%= district.voters %></td>
+        <td><%= district.ballots %></td>
+        <td><%= district.multiple_x.to_i + district.blank.to_i + district.other.to_i %></td>
+        <td><%= link_to 'Zarządzaj głosami!', votes_path %></td>
+        <td><%= link_to 'Szczegóły', [district.voivodship, district] %></td>
+           <td><%= link_to 'Edytuj', edit_voivodship_district_path(district.voivodship, district) %></td>
+   <% end %> 
+</tbody>
+
+</table>
+
+
+<br>
+
+<% elsif current_user.centralny? %>
+<p> Witaj, <%= @user.name%>!</p>
+
+<% elsif current_user.admin? %>
+<p> Witaj, o wielki adminie!</p>
+ <% end %>
+ 
+
+   <% end %> 
+<script src="//railsgirls.com/assets/bootstrap.js"></script>
+</body>
+</html>

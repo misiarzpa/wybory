@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nazwa:</strong>
+  <%= @committee.name %>
+</p>
+
+<p>
+  <strong>Logo:</strong>
+ <%= image_tag(@committee.logo_url, :width => 200) if @committee.logo.present? %>
+</p>
+
+<p>
+	<strong>Województwa w których można głosować na ten komitet:</strong></p>
+	  <ul>
+    <% @committee.voivodships.each do |voivodship| %>
+      <li><%= voivodship.name %></li>
+    <% end %>
+  </ul>
+
+<%= link_to 'Edytuj', edit_committee_path(@committee) %> |
+<%= link_to 'Cofnij', committees_path %>

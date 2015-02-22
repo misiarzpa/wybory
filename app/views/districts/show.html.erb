@@ -1,0 +1,79 @@
+
+
+<p>
+  <strong>Nazwa:</strong>
+  <%= @district.name %>
+</p>
+
+<p>
+  <strong>Ważne głosy:</strong>
+  <%= @district.valid_votes %>
+</p>
+
+<p>
+  <strong>Uprawnieni do głosowania:</strong>
+  <%= @district.voters %>
+</p>
+
+<p>
+  <strong>Wydane karty:</strong>
+  <%= @district.ballots %>
+</p><p>
+  <strong>Wszystkie oddane głosy:</strong>
+  <%= @district.valid_votes.to_i + @district.multiple_x.to_i + @district.blank.to_i + @district.other.to_i %>
+</p>
+<p>
+  <%if current_user.admin?%>
+  <strong>Użytkownicy zarządzający tym okręgiem:</strong></p>
+    <ul>
+    <% @district.users.each do |user| %>
+      <li><%= user.name %></li>
+    <% end %>
+    <li> <%= link_to 'Przypisz użytkownika', users_path %></li>
+  </ul>
+<%end%>
+<p>
+  <strong>Województwo:</strong>
+  <%= @district.voivodship.name %>
+</p>
+
+
+<p>
+  <strong>Nieważne głosy:</strong>
+  <li> Ze względu na brak znaku X : <%= @district.blank %>
+  </li>
+   <li> Ze względu na więcej niż jeden znak X : <%= @district.multiple_x %>
+  </li>
+    <li> Z innego względu : <%= @district.other %>
+  </li>
+</p>
+<%if current_user.centralny? %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Komitety wyborcze</th>
+      <th>Ilość głosów</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+    <% @district.votes.each do |vote| %>
+      <tr>    
+        <td><%= vote.committee.name %></td>
+        <td><%= vote.number %></td>
+      </tr>
+    <%end%>
+
+</tbody>
+
+</table>
+<%end%>
+<br>
+
+<%if current_user.admin? || current_user.okregowy? %>
+<%= link_to 'Edytuj', edit_voivodship_district_path(@district.voivodship, @district) %> 
+<%end%>
+<%if current_user.admin? || current_user.centralny? %>
+ <%= link_to 'Cofnij', voivodship_districts_path(@district.voivodship) %>
+<%end%>

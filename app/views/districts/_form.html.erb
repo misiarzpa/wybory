@@ -1,0 +1,54 @@
+<%= form_for([@district.voivodship, @district]) do |f| %>
+  <% if @district.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@district.errors.count, "error") %> prohibited this district from being saved:</h2>
+
+      <ul>
+      <% @district.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%if current_user.admin?%>
+  <div class="field">
+    <%= f.label :Nazwa %><br>
+    <%= f.text_field :name %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :Województwo %><br>
+    <%= f.select :voivodship_id, @voivodships %>
+  </div>
+    <div class="field">
+    <%= f.label :Uprawnieni_do_głosowania %><br>
+    <%= f.number_field :voters %>
+  </div>
+  <%elsif current_user.okregowy?%>
+  <div class="field">
+    <%= f.label :Ważne_głosy %><br>
+    <%= f.number_field :valid_votes %>
+  </div>
+
+    <div class="field">
+    <%= f.label :karty_do_głosowania %><br>
+    <%= f.number_field :ballots %>
+  </div>
+  <div class="field">
+    <%= f.label :Nieważne_głosy_brak_znaku_X %><br>
+    <%= f.number_field :blank %>
+  </div>
+  <div class="field">
+    <%= f.label :Nieważne_głosy_więcej_niż_jeden_znak_X %><br>
+    <%= f.number_field :multiple_x %>
+  </div>
+  <div class="field">
+    <%= f.label :Nieważne_głosy_inna_przyczyna %><br>
+    <%= f.number_field :other %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Zatwierdź'%>
+  </div>
+<% end %>
+<%end%>

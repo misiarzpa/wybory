@@ -1,0 +1,36 @@
+<%= form_for @committee, :html => {:multipart => true} do |f| %>
+  <% if @committee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@committee.errors.count, "error") %> prohibited this committee from being saved:</h2>
+
+      <ul>
+      <% @committee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nazwa %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :logo %><br>
+    <%= f.file_field :logo %>
+  </div>
+
+
+<div class ="field">
+  <%= f.label :województwa %><br>
+  
+<% for voivodship in Voivodship.all %>
+<label class="li"><%= check_box_tag :voivodship_ids, voivodship.id, @committee.voivodships.include?(voivodship), :name => 'committee[voivodship_ids][]' %> <u><%= voivodship.name %></u></label><br />
+
+<% end %>
+</div>
+
+  <div class="actions">
+    <%= f.submit 'Zatwierdź' %>
+  </div>
+<% end %>

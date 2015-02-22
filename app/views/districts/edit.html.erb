@@ -1,0 +1,10 @@
+<p>Edycja okręgu wyborczego</p>
+
+<%= render 'form' %>
+
+<%= link_to 'Szczegóły', [@district.voivodship, @district] %> 
+<%if current_user.admin? || current_user.centralny? %> |
+
+<%= link_to 'Cofnij', voivodship_districts_path(@district.voivodship) %>
+
+<%end%>

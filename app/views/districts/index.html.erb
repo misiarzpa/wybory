@@ -1,0 +1,45 @@
+<p>Okręgi wyborcze</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nazwa</th>
+      <th> Województwo </th>
+      <th>Ważne głosy</th>
+      <th>Uprawnieni do głosowania</th>
+      <th>Wydane karty</th>
+      <th>Nieważne głosy</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @districts.each do |district| %>
+      <tr>
+        <td><%= district.name %></td>
+        <td><%= district.voivodship.name%></td>
+        <td><%= district.valid_votes %></td>
+        <td><%= district.voters %></td>
+        <td><%= district.ballots %></td>
+        <td><%= district.multiple_x.to_i + district.blank.to_i + district.other.to_i %></td>
+    
+        <td><%= link_to 'Szczegóły', [district.voivodship, district] %></td>
+    
+  
+        <%if current_user.admin?%>
+          <td><%= link_to 'Edytuj', edit_voivodship_district_path(district.voivodship, district) %></td>
+          <td><%= link_to 'Usuń', [district.voivodship, district], method: :delete, data: { confirm: 'Przemyśl to jeszcze' } %></td>
+        
+        <% end %>
+      </tr>
+    <%end%>
+  </tbody>
+</table> 
+<% if current_user.admin? %>
+  <%= link_to 'Utwórz', new_voivodship_district_path%>
+
+<% end %>
+
+
+<br>
+

@@ -1,0 +1,25 @@
+<%= form_for(@voivodship) do |f| %>
+  <% if @voivodship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@voivodship.errors.count, "error") %> prohibited this voivodship from being saved:</h2>
+
+      <ul>
+      <% @voivodship.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Nazwa %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :Ilość_miejsc_do_sejmiku %><br>
+    <%= f.number_field :councilman %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wybory</title>
+   <link rel="stylesheet" href="//railsgirls.com/assets/bootstrap.css">
+  <link rel="stylesheet" href="//railsgirls.com/assets/bootstrap-theme.css">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+   <a class="navbar-brand" href="/">PKW</a>
+    </div>
+    <div class="collapse navbar-collapse">
+
+
+
+
+
+
+<% if user_signed_in? %>
+  <% if current_user.okregowy? %>
+    <ul class="nav navbar-nav">
+      <li class="active">
+      	<%= link_to "Głosy w Twoim okręgu", votes_path %></li></ul>
+
+
+  <% elsif current_user.admin? %>
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <%= link_to "Województwa", voivodships_path %></li></ul>
+
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <%= link_to "Komitety", committees_path %></li></ul>
+
+    <ul class="nav navbar-nav">
+      <li class="active">
+    		<%= link_to "Użytkownicy", users_path %></li></ul>
+  
+   <% elsif current_user.centralny? %>
+       <ul class="nav navbar-nav">
+      <li class="active">
+        <%= link_to "Wyniki na szczeblu wojewódzkim", voivodships_path %></li></ul>
+               <ul class="nav navbar-nav">
+      <li class="active">
+        <%= link_to "Wyniki na szczeblu okręgowym", districts_path %></li></ul>
+   <%end%>
+
+    <ul class="nav navbar-nav">
+    	<li class="active">
+    		<%= link_to "Mój profil", edit_user_registration_path %></li></ul>
+    <ul class="nav navbar-nav">
+     	<li class="active">
+     		<%= link_to "Wyloguj się", destroy_user_session_path, :method => :delete %></li></ul>
+
+  <% else %>
+    <ul class="nav navbar-nav">
+    	<li class="active">
+    		<%= link_to "Zaloguj się", new_user_session_path %></li></ul>
+  <% end %>
+  
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+	<h1>System wyborczy</h1>
+	<h2>Fałszujemy wybory od początków istnienia!</h2>
+
+  <% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+  <%= yield %>
+</div>
+<footer>
+  <div class="container">
+  
+  </div>
+</footer>
+<script src="//railsgirls.com/assets/bootstrap.js"></script>
+</body>
+</html>

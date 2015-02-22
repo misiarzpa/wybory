@@ -1,0 +1,40 @@
+
+
+<p>
+  <strong>Imię:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Rola:</strong>
+  <%= @user.role.name %>
+</p>
+
+<p>
+  <strong>Email:
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Okręgi tego użytkownika:</strong></p>
+  
+    <% @user.districts.each do |district| %>
+      <li><%= district.name %> <%=' - województwo - ' %> <%= district.voivodship.name %></li>
+
+    <% end %>
+    <%= link_to 'przypisz okręg', edit_user_path(@user) %>
+      </ul>
+<p>
+  <strong>Joined on:</strong>
+  <%= @joined_on %>
+</p>
+<p>
+  <strong>Last logged in on:</strong>
+  <%= @last_login %>
+</p>
+<p>
+  <strong>No. times logged in:</strong>
+  <%= @user.sign_in_count %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

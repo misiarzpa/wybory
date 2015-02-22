@@ -1,0 +1,67 @@
+<% if current_user.admin? %>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nazwa:</strong>
+  <%= @voivodship.name %>
+</p>
+
+<p>
+  <strong>Ilość miejsc w sejmiku:</strong>
+  <%= @voivodship.councilman %>
+</p>
+
+
+<p>
+	<strong>Komitety wyborcze w tym województwie:</strong></p>
+  <ul>
+    <% @voivodship.committees.each do |committee| %>
+      <li><%= committee.name %></li>
+    <% end %>
+  </ul>
+
+<p>
+	<strong>Okręgi wyborcze w tym województwie:</strong>
+</p>
+
+<ul>
+  <% @voivodship.districts.each do |district| %>
+    <li><%= district.name %></li>
+  <% end %>
+</ul>
+<%= link_to 'Komitety wyborcze', committees_path(@committee) %> 
+<%= link_to 'Okręgi wyborcze', voivodship_districts_path(@voivodship) %> <br>
+<%= link_to 'Edytuj', edit_voivodship_path(@voivodship) %> |
+<%= link_to 'Cofnij', voivodships_path %>
+
+
+<%elsif current_user.centralny?%>
+
+
+<p>Województwo <%= @voivodship.name %> </p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Komitety wyborcze</th>
+      <th>Ilość głosów</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+ 
+  <tbody>
+       
+    <% @voivodship.committees.each do |committee| %>
+      <tr>
+        <td><%= committee.name %></td>
+        <td><% committee.votes.each do |vote|%>
+          <%= Vote.sum(vote.number)%></td>
+        <%end%>
+    <%end%>
+
+
+</tbody>
+
+</table>
+<%end%>

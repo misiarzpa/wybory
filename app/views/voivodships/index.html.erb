@@ -1,0 +1,33 @@
+
+
+<h1>Województwa</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nazwa</th>
+      <th>Liczba miejsc w sejmiku</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @voivodships.each do |voivodship| %>
+      <tr>
+        <td><%= voivodship.name %></td>
+        <td><%= voivodship.councilman %></td>
+        <td><%= link_to 'Szczegóły', voivodship %></td>
+
+        <%if current_user.admin? %>
+        <td><%= link_to 'Edytuj', edit_voivodship_path(voivodship) %></td>
+        <td><%= link_to 'Usuń', voivodship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+   <%if current_user.admin? %>
+<%= link_to 'Utwórz', new_voivodship_path %>
+<%end%>
