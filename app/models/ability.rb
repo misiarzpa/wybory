@@ -8,6 +8,7 @@ class Ability
     if user.admin? 
       can :manage, :all
     elsif user.centralny?
+      can :read, Vote
       can :read, District 
       can :read, Voivodship  
       can :manage, District do |district|
@@ -20,13 +21,14 @@ class Ability
       can :read, Voivodship
       can :read, Vote
       can :create,Vote
+      can :destroy, Vote
       can :update, Vote
       can :read, Vote
-        can :read, District   
+      can :read, District   
       can :update, District
       # manage products, assets he owns
       can :manage, District do |district|
-        district.try(:user_id) == user
+        district.try(:user) == user
       end
     end
   end

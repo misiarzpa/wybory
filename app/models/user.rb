@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
   belongs_to :role
   has_many :usdis
   has_many :districts, :through => :usdis
-  validates_presence_of :name
+  validates :name, length: { minimum: 2 }, presence: true
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :password, length: { minimum: 2 }, presence: true
   before_save :assign_role
 
 def assign_role

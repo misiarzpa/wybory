@@ -3,6 +3,6 @@ class Committee < ActiveRecord::Base
     has_many :covos
     has_many :voivodships, :through => :covos
     has_many :votes
-    validates_presence_of :name
+    validates :name, length: { minimum: 2 }, presence: true
 
 end

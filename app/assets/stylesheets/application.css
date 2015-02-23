@@ -3,6 +3,7 @@ footer { margin-top: 100px; }
 table, td, th { text-align: center; vertical-align: middle; border: none; padding:5px;}
 th { border-bottom: 1px solid #DDD;}
 p { font-size: 18px; }
+img{ width: 200px;}
 
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files

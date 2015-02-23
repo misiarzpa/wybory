@@ -29,7 +29,7 @@
 </div>
   <div class="field">
 <% for district in District.all %>
-<label class="li"><%= radio_button_tag :district_ids, district.id, @user.districts.include?(district), :name => 'user[district_ids][]'%> <u><%= district.name %><%=' - województwo - '%> <%= district.voivodship.name %></u></label><br /><% end %>
+<label class="li"><%= radio_button_tag :district_ids, district.id, @user.districts.include?(district), :name => '[district_ids][]'%> <u><%= district.name %><%=' - województwo - '%> <%= district.voivodship.name %></u></label><br /><% end %>
 </div>
 
   <div class="actions">

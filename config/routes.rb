@@ -7,10 +7,12 @@ Rails.application.routes.draw do
   resources :votes
 
   resources :voivodships
-
+  resources :districts do
+    resources :votes
+  end
   resources :voivodships do
- resources :districts
-end
+    resources :districts
+  end
 
   devise_for :users
     scope "/admin" do

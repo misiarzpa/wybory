@@ -9,7 +9,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  
 			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -30,7 +30,6 @@
 
 <% if user_signed_in? %>
   <% if current_user.okregowy? %>
-
 
 
   <% elsif current_user.admin? %>
@@ -73,6 +72,7 @@
 </nav>
 
 <div class="container">
+
 	<h1>System wyborczy</h1>
 	<h4>Fałszujemy wybory od 1989 roku!</h4>
 

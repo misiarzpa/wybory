@@ -26,10 +26,6 @@ class DistrictsController < ApplicationController
     respond_with(@districts)
   end
 
-    def all
-    @districts = District.all
-    respond_with(@districts)
-  end
   # GET /districts/1
   # GET /districts/1.json
   def show

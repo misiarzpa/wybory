@@ -1,6 +1,6 @@
 <% if user_signed_in? %>
-  <% if current_user.okregowy? %>
-  <h1>Głosy w Twoim okręgu: </h1>
+  <% if current_user.okregowy? || current_user.centralny? %>
+  <h1>Głosy: </h1>
 
 
 
@@ -20,9 +20,9 @@
         <td><%= vote.number %></td>
         <td><%= vote.committee.name%></td>
  
-        <td><%= link_to 'Szczegóły', vote %></td>
-        <td><%= link_to 'Edytuj', edit_vote_path(vote) %></td>
-        <td><%= link_to 'Usuń', vote, method: :delete, data: { confirm: 'Przemyśl to jeszcze' } %></td>
+        <td><%= link_to 'Szczegóły', [vote.district, vote] %></td>
+        <td><%= link_to 'Edytuj', edit_district_vote_path(vote.district, vote) %></td>
+        <td><%= link_to 'Usuń', [vote.district, vote], method: :delete, data: { confirm: 'Przemyśl to jeszcze' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,5 +30,6 @@
   
 <br>
 
-<%= link_to 'Dodaj głosy', new_vote_path %>
+<%= link_to 'Dodaj głosy', new_district_vote_path %>
    <% end %>    <% end %> 
+

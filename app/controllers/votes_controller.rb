@@ -9,40 +9,98 @@ class VotesController < ApplicationController
  # before_action :set_districts_names, only: [:new, :edit, :update, :create]
 
   respond_to :html
+
  def index
-    @votes = Vote.all
-    respond_with(@votes)
+    #1st you retrieve the post thanks to params[:post_id]
+    district = District.find(params[:district_id])
+    #2nd you get all the comments of this post
+    @votes = district.votes
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @votes }
+    end
   end
 
-  def show
-    respond_with(@vote)
+   def show
+    #1st you retrieve the post thanks to params[:post_id]
+     district = District.find(params[:district_id])
+    #2nd you retrieve the comment thanks to params[:id]
+    @vote = district.votes.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @votes }
+    end
   end
 
   def new
+   district = District.find(params[:district_id])
+    @vote = district.votes.build
 
-    @vote = Vote.new
-    respond_with(@vote)
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @vote }
+    end
+
   end
 
-  def edit
+   def edit
+    #1st you retrieve the post thanks to params[:post_id]
+     district = District.find(params[:district_id])
+    #2nd you retrieve the comment thanks to params[:id]
+    @vote = district.votes.find(params[:id])
   end
 
-    def destroy
+def destroy
+    #1st you retrieve the post thanks to params[:post_id]
+    district = District.find(params[:district_id])
+    #2nd you retrieve the comment thanks to params[:id]
+    @vote = district.votes.find(params[:id])
     @vote.destroy
-    respond_with(@vote)
+
+    respond_to do |format|
+      #1st argument reference the path /posts/:post_id/comments/
+      format.html { redirect_to(district_votes_url) }
+      format.xml  { head :ok }
+    end
   end
 
 
-  def create
+ def create
+    #1st you retrieve the post thanks to params[:post_id]
+  district = District.find(params[:district_id])
+    #2nd you create the comment with arguments in params[:comment]
+    @vote = district.votes.create(vote_params)
 
-    @vote = Vote.new(vote_params)
-    @vote.save
-    respond_with(@vote)
+    respond_to do |format|
+      if @vote.save
+        #1st argument of redirect_to is an array, in order to build the correct route to the nested resource comment
+        format.html { redirect_to([@vote.district, @vote], :notice => 'Vote was successfully created.') }
+        #the key :location is associated to an array in order to build the correct route to the nested resource comment
+        format.xml  { render :xml => @vote, :status => :created, :location => [@vote.district, @vote] }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @vote.errors, :status => :unprocessable_entity }
+      end
+    end
   end
+def update
+    #1st you retrieve the post thanks to params[:post_id]
+    district = District.find(params[:district_id])
+    #2nd you retrieve the comment thanks to params[:id]
+    @vote = district.votes.find(params[:id])
 
-  def update
-    @vote.update(vote_params)
-    respond_with(@vote)
+    respond_to do |format|
+      if @vote.update_attributes(params[:vote])
+        #1st argument of redirect_to is an array, in order to build the correct route to the nested resource comment
+        format.html { redirect_to([@vote.district, @vote], :notice => 'Vote was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @vote.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   private
@@ -62,7 +120,7 @@ class VotesController < ApplicationController
       @districts = District.find(params[:district_id])
     end
     def set_district
-      @district = current_user.districts
+      @district = District.find(params[:district_id])
     end
 
     def set_committees
