@@ -3,7 +3,7 @@ class VotesController < ApplicationController
   load_and_authorize_resource   
 
   before_action :set_vote, only: [:show, :edit, :update, :destroy]
-  before_action :set_district, only: [:new, :edit, :update, :create]
+  before_action :set_district, only: [:index, :new, :edit, :update, :create]
   before_action :set_committees, only: [:new, :edit, :update, :create]
   #before_action :set_districts, only: [:new, :edit, :update, :create]
  # before_action :set_districts_names, only: [:new, :edit, :update, :create]

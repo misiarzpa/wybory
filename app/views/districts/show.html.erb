@@ -1,7 +1,7 @@
 
 
 <p>
-  <strong>Nazwa:</strong>
+  <strong>Nazwa okręgu:</strong>
   <%= @district.name %>
 </p>
 
@@ -47,8 +47,8 @@
     <li> Z innego względu : <%= @district.other %>
   </li>
 </p>
-<%if current_user.centralny? %>
-
+<%if current_user.centralny? || current_user.okregowy?%>
+<h2> Głosy w Twoim okręgu wyborczym: </h2>
 <table>
   <thead>
     <tr>
@@ -57,12 +57,12 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
-    <% @district.votes.each do |vote| %>
-      <tr>    
-        <td><%= vote.committee.name %></td>
-        <td><%= vote.number %></td>
-      </tr>
+    <% @district.voivodship.committees.each do |committee| %>
+      <tr>
+        <td><%= committee.name %></td>
+        <td><% committee.votes.each do |vote|%>
+          <%= vote.number%></td>
+        <%end%>
     <%end%>
 
 </tbody>
@@ -70,8 +70,11 @@
 </table>
 <%end%>
 <br>
+<%if current_user.okregowy? %>
+<%= link_to 'Dodaj głosy ', new_vote_path %> <%end%>
 
 <%if current_user.admin? || current_user.okregowy? %>
+
 <%= link_to 'Edytuj', edit_voivodship_district_path(@district.voivodship, @district) %> 
 <%end%>
 <%if current_user.admin? || current_user.centralny? %>

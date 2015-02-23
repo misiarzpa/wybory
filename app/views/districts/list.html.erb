@@ -31,7 +31,6 @@
         <td><%= district.voters %></td>
         <td><%= district.ballots %></td>
         <td><%= district.multiple_x.to_i + district.blank.to_i + district.other.to_i %></td>
-        <td><%= link_to 'Zarządzaj głosami!', votes_path %></td>
         <td><%= link_to 'Szczegóły', [district.voivodship, district] %></td>
            <td><%= link_to 'Edytuj', edit_voivodship_district_path(district.voivodship, district) %></td>
    <% end %> 

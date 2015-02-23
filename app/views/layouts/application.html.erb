@@ -30,9 +30,7 @@
 
 <% if user_signed_in? %>
   <% if current_user.okregowy? %>
-    <ul class="nav navbar-nav">
-      <li class="active">
-      	<%= link_to "Głosy w Twoim okręgu", votes_path %></li></ul>
+
 
 
   <% elsif current_user.admin? %>
@@ -76,7 +74,7 @@
 
 <div class="container">
 	<h1>System wyborczy</h1>
-	<h2>Fałszujemy wybory od początków istnienia!</h2>
+	<h4>Fałszujemy wybory od 1989 roku!</h4>
 
   <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
